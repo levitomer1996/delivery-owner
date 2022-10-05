@@ -105,21 +105,18 @@ function DashboardContent() {
   };
 
   useEffect(() => {
-    setPage("init");
-    tokenSignin();
-  }, []);
-
-  useEffect(() => {
-    setPage("init");
-    tokenSignin();
-
-    if (!isLogged) {
-      setPage("signin");
+    if (!isInitFinished) {
+      setPage("init");
+      tokenSignin();
     } else {
-      if (authState.user.Business.length == 0) {
-        setPage("create_business");
+      if (!isLogged) {
+        setPage("signin");
       } else {
-        setPage("dashboard");
+        if (authState.user.Business.length == 0) {
+          setPage("create_business");
+        } else {
+          setPage("Dashboard");
+        }
       }
     }
   }, [isLogged]);
@@ -177,7 +174,7 @@ function DashboardContent() {
           </Toolbar>
           <Divider />
           <List component="nav">
-            <MainListItems disableButtons={!isLogged} />
+            <MainListItems disableButtons={!isLogged} setPage={setPage} />
             <Divider sx={{ my: 1 }} />
             <SecondaryListItems disableButtons={!isLogged} />
           </List>

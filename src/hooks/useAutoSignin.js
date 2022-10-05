@@ -12,15 +12,14 @@ export default () => {
   const tokenSignin = async () => {
     const token = getToken();
     try {
-      setInit(true);
       const res = await deliver.get("auth/tokensignin", {
         headers: { Authorization: `Bearer ${token}` },
       });
       console.log(res.data);
       Signin(res.data);
-      setInit(false);
+      setInit(true);
     } catch (error) {
-      setInit(false);
+      setInit(true);
       setError(true);
     }
   };

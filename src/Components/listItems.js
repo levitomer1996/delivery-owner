@@ -10,40 +10,32 @@ import BarChartIcon from "@mui/icons-material/BarChart";
 import LayersIcon from "@mui/icons-material/Layers";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import InventoryIcon from "@mui/icons-material/Inventory";
+import { InvertColors } from "@mui/icons-material";
 
-export const MainListItems = ({ disableButtons }) => {
+export const MainListItems = ({ disableButtons, setPage }) => {
+  const list = [
+    { title: "Dashboard", icon: <DashboardIcon /> },
+    { title: "Orders", icon: <ShoppingCartIcon /> },
+    { title: "Products", icon: <InventoryIcon /> },
+    { title: "Reports", icon: <BarChartIcon /> },
+    { title: "Integrations", icon: <LayersIcon /> },
+  ];
   return (
     <React.Fragment>
-      <ListItemButton disabled={disableButtons}>
-        <ListItemIcon>
-          <DashboardIcon />
-        </ListItemIcon>
-        <ListItemText primary="Dashboard" />
-      </ListItemButton>
-      <ListItemButton disabled={disableButtons}>
-        <ListItemIcon>
-          <ShoppingCartIcon />
-        </ListItemIcon>
-        <ListItemText primary="Orders" />
-      </ListItemButton>
-      <ListItemButton disabled={disableButtons}>
-        <ListItemIcon>
-          <InventoryIcon />
-        </ListItemIcon>
-        <ListItemText primary="Products" />
-      </ListItemButton>
-      <ListItemButton disabled={disableButtons}>
-        <ListItemIcon>
-          <BarChartIcon />
-        </ListItemIcon>
-        <ListItemText primary="Reports" />
-      </ListItemButton>
-      <ListItemButton disabled={disableButtons}>
-        <ListItemIcon>
-          <LayersIcon />
-        </ListItemIcon>
-        <ListItemText primary="Integrations" />
-      </ListItemButton>
+      {list.map(({ title, icon }) => {
+        return (
+          <ListItemButton
+            disabled={disableButtons}
+            key={title}
+            onClick={() => {
+              setPage(title);
+            }}
+          >
+            <ListItemIcon>{icon}</ListItemIcon>
+            <ListItemText primary={title} />
+          </ListItemButton>
+        );
+      })}
     </React.Fragment>
   );
 };
