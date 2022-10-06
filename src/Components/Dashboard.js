@@ -119,7 +119,7 @@ function DashboardContent() {
         }
       }
     }
-  }, [isLogged]);
+  }, [isInitFinished]);
 
   return (
     <ThemeProvider theme={mdTheme}>

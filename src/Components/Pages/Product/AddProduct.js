@@ -1,34 +1,45 @@
-import * as React from "react";
-import Avatar from "@mui/material/Avatar";
+import React, { useContext, useState } from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import deliver from "../../../api/deliver";
 import getToken from "../../../Helpers/getToken";
+import AuthContext from "../../../Context/AutContext";
+
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 const theme = createTheme();
 
 export default function AddProduct() {
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [type, setType] = useState("");
+  const { authState } = useContext(AuthContext);
+
+  const menuItemList = ["STARTER", "MAIN", "DESSERT", "DRINK"];
+  const handleChange = (event) => {
+    setType(event.target.value);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+
     try {
       const token = getToken();
       const res = await deliver.post(
-        "business/createbusiness",
+        "/product/new",
         {
           name: data.get("name"),
-          business_type: data.get("type"),
-          coordinate: { x: 100, y: 100 },
+          price: data.get("price"),
+          image: data.get("image"),
+          type,
+          business_id: authState.user.Business[0]._id,
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -72,6 +83,25 @@ export default function AddProduct() {
               id="price"
               autoComplete="price"
             />
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">type</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={type}
+                label="type"
+                onChange={handleChange}
+              >
+                {menuItemList.map((item) => {
+                  return (
+                    <MenuItem value={item} key={item}>
+                      {item}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+
             <TextField
               margin="normal"
               required
@@ -79,8 +109,9 @@ export default function AddProduct() {
               name="image"
               InputLabelProps={{ shrink: true }}
               label="Choose image from file"
-              type="file"
+              type="text"
               id="image"
+              // onChange={handleChange}
             />
 
             <Button
