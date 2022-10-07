@@ -19,7 +19,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { MainListItems, SecondaryListItems } from "./listItems";
 import Chart from "./Chart";
-import Deposits from "./Deposits";
+
 import Orders from "./Orders";
 import PageContext from "../Context/PageContext";
 import renderDashboard from "../Helpers/renderDashboard";
@@ -119,7 +119,7 @@ function DashboardContent() {
         }
       }
     }
-  }, [isInitFinished]);
+  }, [isInitFinished, isLogged]);
 
   return (
     <ThemeProvider theme={mdTheme}>

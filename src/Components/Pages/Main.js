@@ -1,8 +1,20 @@
 import React from "react";
 import Chart from "../Chart";
-import { Grid, Paper } from "@mui/material";
-import Deposits from "../Deposits";
+import { Grid, Paper, Typography } from "@mui/material";
+
 import Orders from "../Orders";
+import Title from "../Title";
+
+function Deposits({ incomes }) {
+  return (
+    <React.Fragment>
+      <Title>My Incomes</Title>
+      <Typography component="p" variant="h4">
+        {incomes}$
+      </Typography>
+    </React.Fragment>
+  );
+}
 
 const Main = () => {
   return (
@@ -30,7 +42,7 @@ const Main = () => {
             height: 240,
           }}
         >
-          <Deposits />
+          <Deposits incomes={0} />
         </Paper>
       </Grid>
       {/* Recent Orders */}

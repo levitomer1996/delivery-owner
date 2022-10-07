@@ -1,16 +1,23 @@
+import React, { useContext, useEffect } from "react";
 import {
   Button,
+  CircularProgress,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
 } from "@mui/material";
-import React, { useContext } from "react";
 import PageContext from "../../../Context/PageContext";
+import useGetProducts from "../../../hooks/useGetProducts";
 
 const Product = () => {
   const { setPage } = useContext(PageContext);
+  const [spinner, products, getProducts] = useGetProducts();
+  useEffect(() => {
+    getProducts();
+  }, []);
+
   return (
     <div>
       <Table size="large">
@@ -32,7 +39,17 @@ const Product = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          <TableRow key={"dsa"}></TableRow>
+          {products.map(({ image, name, price }) => {
+            return (
+              <TableRow key={name}>
+                <TableCell>
+                  <img src={image} style={{ width: 50, height: 50 }} />
+                </TableCell>
+                <TableCell>{name}</TableCell>
+                <TableCell>{price}$</TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </div>

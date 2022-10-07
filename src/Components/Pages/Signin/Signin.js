@@ -14,6 +14,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import PageContext from "../../../Context/PageContext";
 import useSignin from "../../../hooks/useSignin";
+import renderProgress from "./Helpers/renderProgress";
 
 const theme = createTheme();
 
@@ -74,10 +75,7 @@ export default function Signin() {
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+            {renderProgress(spinner, error)}
             <Button
               type="submit"
               fullWidth
