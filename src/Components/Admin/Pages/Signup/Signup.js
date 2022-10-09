@@ -31,9 +31,6 @@ export default function SignUp() {
       l_name: data.get("lastName"),
       email: data.get("email"),
       password: data.get("password"),
-      business_name: data.get("name"),
-      business_type: data.get("type"),
-      coordinate: { x: 100, y: 100 },
     };
     await signup(creds);
   };
@@ -103,30 +100,6 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="Business name"
-                  label="Business name"
-                  name="name"
-                  autoComplete="name"
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="type"
-                  label="type"
-                  type="text"
-                  id="type"
-                  autoComplete="type"
                 />
               </Grid>
             </Grid>

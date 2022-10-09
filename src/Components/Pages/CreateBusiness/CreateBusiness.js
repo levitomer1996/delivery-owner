@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -15,15 +15,18 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import deliver from "../../../api/deliver";
 import getToken from "../../../Helpers/getToken";
 import PageContext from "../../../Context/PageContext";
+import { CircularProgress } from "@mui/material";
 
 const theme = createTheme();
 
 export default function CreateBusiness() {
   const { setPage } = useContext(PageContext);
+  const [spinner, setSpinner] = useState(false);
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     try {
+      setSpinner(true);
       const token = getToken();
       const res = await deliver.post(
         "business/createbusiness",
@@ -34,8 +37,11 @@ export default function CreateBusiness() {
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
+      setSpinner(false);
       setPage("Dashboard");
-    } catch (error) {}
+    } catch (error) {
+      setSpinner(false);
+    }
   };
 
   return (
@@ -85,6 +91,7 @@ export default function CreateBusiness() {
             >
               Create your Business
             </Button>
+            {spinner ? <CircularProgress /> : null}
           </Box>
         </Box>
       </Container>

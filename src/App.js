@@ -4,17 +4,23 @@ import Dashboard from "./Components/Dashboard";
 import { PageProvider } from "./Context/PageContext";
 import { AuthProvider } from "./Context/AutContext";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-
+import AdminDashboard from "./Components/Admin/Pages/AdminDashboard";
+import { AdminPageProvider } from "./Components/Admin/Context/AdminPageContext";
 function App() {
   return (
     <Router>
-      <Routes>
-        <AuthProvider>
-          <PageProvider>
+      <AuthProvider>
+        <PageProvider>
+          <Routes>
             <Route path="/" element={<Dashboard />} />
-          </PageProvider>
-        </AuthProvider>
-      </Routes>
+          </Routes>
+        </PageProvider>
+      </AuthProvider>
+      <AdminPageProvider>
+        <Routes>
+          <Route path="/admin" element={<AdminDashboard />} />
+        </Routes>
+      </AdminPageProvider>
     </Router>
   );
 }
